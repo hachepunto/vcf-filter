@@ -1,1 +1,1 @@
-BED=data/coordenadas94gsorted.bed
+BED_DIRECTORY=beds
