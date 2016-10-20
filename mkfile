@@ -1,8 +1,6 @@
 <vcf-filter.mk
 
-VCF-FILTER_TARGETS= `{find -L data/ -name '*.vcf.gz' -o -name '*.vcf' \
-		| sed -e 's#^data/#results/vcf-filter/#g' \
-			-e 's#\.vcf(\.gz)?$#.filtered.vcf#g'}
+VCF-FILTER_TARGETS= `{./targets}less 
 
 vcf-filter:V:	$VCF-FILTER_TARGETS
 
