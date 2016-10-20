@@ -1,0 +1,31 @@
+#!/bin/bash
+
+prep_for_join() {
+	awk '{print "N\t" $0}'
+}
+
+find_beds() {
+	find "$BED_DIRECTORY" \
+		-name '*.bed' \
+	| sed \
+		-e 's#^'"$BED_DIRECTORY"'/##g' \
+	| sort \
+	| prep_for_join
+}
+
+find_vcfs() {
+	find -L data/ \
+		-name '*.vcf.gz' \
+		-o -name '*.vcf' \
+	| sed \
+		-e 's#^data/#results/vcf-filter/#g' \
+		-e 's#\.vcf#	.vcf#g' \
+	| prep_for_join
+}
+
+main() {
+	join <(find_vcfs) <(find_beds) \
+	| awk '{print $2 "_filtered_by_" $4 $3}'
+}
+
+main "$@"
